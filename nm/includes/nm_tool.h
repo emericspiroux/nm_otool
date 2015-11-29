@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm.h                                               :+:      :+:    :+:   */
+/*   nm_tool.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/08/17 14:26:33 by larry             #+#    #+#             */
-/*   Updated: 2015/11/27 23:27:30 by larry            ###   ########.fr       */
+/*   Updated: 2015/11/28 01:57:37 by larry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_P_H
-# define FT_P_H
+#ifndef NM_TOOL_H
+# define NM_TOOL_H
 # include "libft.h"
 # include <sys/mman.h>
 # include <fcntl.h>
@@ -23,11 +23,9 @@
 # include <mach-o/fat.h>
 # include <stdlib.h>
 # include <unistd.h>
+
 # define TXT "__TEXT"
 # define TUT "__text"
-
-//test
-# include <stdio.h>
 
 typedef struct stat		t_stat;
 
@@ -62,6 +60,8 @@ typedef struct			s_offlist
 }						t_offlist;
 
 void		ft_nm(char *ptr, char *name);
+void		ft_otool(void *mem, char *file);
+
 int			func_error();
 t_things	*add_things(t_things *thing, struct nlist_64 list,\
 			char *strtable, t_lsection *sec);
@@ -73,7 +73,8 @@ char		secto(t_lsection *sec, unsigned int n_sect);
 t_offlist	*add_off(t_offlist *lst, uint32_t off, uint32_t strx);
 
 void		aff_things(t_things *thing);
-void		browse_ar(t_offlist *lst, char *ptr, char *name);
+void		browse_ar_nm(t_offlist *lst, char *ptr, char *name);
+void		browse_ar_tool(t_offlist *lst, char *ptr, char *name);
 
 int			catch_size(char *name);
 char		*catch_name(char *name);
@@ -85,8 +86,6 @@ char		typing(uint32_t type, uint32_t n_sect, t_lsection *sec, int addr);
 
 void		print_res(long unsigned int addr, unsigned int size, char *ptr);
 void		check_64(struct load_command *com, struct mach_header_64 *mo);
-void		ft_otool(void *mem, char *file);
-void		browse_art(t_offlist *lst, char *ptr, char *name);
 t_offlist	*add_offt(t_offlist *lst, uint32_t off, uint32_t strx);
 void		browse_cmd(struct load_command *com, struct mach_header_64 *mo);
 

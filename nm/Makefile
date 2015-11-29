@@ -22,9 +22,16 @@ LIBFT_DIR=libft/
 INC_DIR=includes/
 SRC_NM=src/nm/
 SRC_OT=src/otools/
+SRC_COM=src/common/
 
-FT_C_NM =	$(SRC_NM)main_nm.c
-FT_C_OT =	$(SRC_OT)main_ot.c
+FT_C_NM =	$(SRC_NM)main_nm.c $(SRC_COM)list_off.c $(SRC_NM)browse_ar_nm.c \
+			$(SRC_COM)catch_size.c $(SRC_COM)catch_name.c \
+			$(SRC_COM)swap_uint32.c
+
+FT_C_OT =	$(SRC_OT)main_ot.c $(SRC_COM)list_off.c $(SRC_OT)browse_ar_tool.c \
+			$(SRC_COM)catch_size.c $(SRC_COM)catch_name.c \
+			$(SRC_COM)swap_uint32.c $(SRC_COM)browse_cmd.c
+
 
 FT_O_NM = $(FT_C_NM:.c=.o)
 FT_O_OT = $(FT_C_OT:.c=.o)

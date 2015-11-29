@@ -6,11 +6,11 @@
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/27 20:44:57 by larry             #+#    #+#             */
-/*   Updated: 2015/11/28 01:31:07 by larry            ###   ########.fr       */
+/*   Updated: 2015/11/28 01:52:43 by larry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
+#include "nm_tool.h"
 
 //fat
 void		go_fati(char *ptr)
@@ -54,10 +54,10 @@ void		go_archivi(void *ptr, char *name)
 	size = size / sizeof(struct ranlib);
 	while (i < size)
 	{
-		lst = add_offt(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);
+		lst = add_off(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);
 		i++;
 	}
-	browse_art(lst, ptr, name);
+	browse_ar_tool(lst, ptr, name);
 }
 
 void		ft_otool(void *mem, char *name)
@@ -77,122 +77,6 @@ void		ft_otool(void *mem, char *name)
 		go_archivi(mem, name);
 	else
 		ft_putendl("Wrong binary format");
-}
-
-
-//offlist
-static void				add_tail_off(t_offlist *elem, t_offlist *to_add)
-{
-	to_add->prev = elem;
-	elem->next = to_add;
-}
-
-static t_offlist		*add_before_off(t_offlist *elem, t_offlist *to_add)
-{
-	t_offlist	*ret;
-
-	ret = NULL;
-	if (elem->prev == NULL)
-	{
-		elem->prev = to_add;
-		to_add->next = elem;
-		ret = to_add;
-	}
-	else
-	{
-		to_add->next = elem;
-		to_add->prev = elem->prev;
-		elem->prev->next = to_add;
-		elem->prev = to_add;
-	}
-	return (ret);
-}
-
-t_offlist		*add_off(t_offlist *lst, uint32_t off, uint32_t strx)
-{
-	t_offlist	*tmp;
-	t_offlist	*tmp2;
-	t_offlist	*ret;
-
-	tmp = (t_offlist*)malloc(sizeof(t_offlist));
-	tmp->off = off;
-	tmp->strx = strx;
-	tmp->next = NULL;
-	tmp->prev = NULL;
-	if (!lst)
-		return (tmp);
-	tmp2 = lst;
-	while (tmp2)
-	{
-		if (tmp2->off > tmp->off)
-		{
-			ret = add_before_off(tmp2, tmp);
-			if (ret)
-				lst = ret;
-			break ;
-		}
-		else if (tmp2->next == NULL)
-		{
-			add_tail_off(tmp2, tmp);
-			break ;
-		}
-		tmp2 = tmp2->next;
-	}
-	return (lst);
-}
-
-void			print_art(uint32_t off, char *ptr, char *file)
-{
-	int				size;
-	struct ar_hdr	*arch;
-	char			*name;
-
-	arch = (void*)ptr + off;
-	name = catch_name(arch->ar_name);
-	size = catch_size(arch->ar_name);
-	ft_putstr(file);
-	ft_putchar('(');
-	ft_putstr(name);
-	ft_putstr("):\n");
-	ft_otool((void*)arch + sizeof(*arch) + size, file);
-}
-
-void			browse_art(t_offlist *lst, char *ptr, char *name)
-{
-	t_offlist	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		print_art(tmp->off, ptr, name);
-		tmp = tmp->next;
-	}
-}
-
-
-//catch
-uint32_t	swap_uint32(uint32_t val)
-{
-	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
-	return (val << 16) | (val >> 16);
-}
-
-int			catch_size(char *name)
-{
-	int		x;
-	char	*word;
-
-	word = ft_strchr(name, '/') + 1;
-	x = ft_atoi(word);
-	return (x);
-}
-
-char		*catch_name(char *name)
-{
-	int		length;
-
-	length = ft_strlen(ARFMAG);
-	return (ft_strstr(name, ARFMAG) + length);
 }
 
 //ot_print
@@ -292,25 +176,11 @@ void	check_64(struct load_command *com, struct mach_header_64 *mo)
 
 
 
-//ft_tools
+
 static int		errors(void)
 {
 	ft_putendl_fd("Error", 2);
 	return (-1);
-}
-
-void			browse_cmd(struct load_command *com, struct mach_header_64 *mo)
-{
-	unsigned int		i;
-
-	i = 0;
-	while (i < mo->ncmds)
-	{
-		if (com->cmd == LC_SEGMENT_64)
-			check_64(com, mo);
-		com += com->cmdsize / sizeof(void *);
-		i++;
-	}
 }
 
 static int		if_forest(int i, char **av)

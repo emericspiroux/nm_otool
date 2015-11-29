@@ -6,128 +6,11 @@
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/26 16:14:36 by larry             #+#    #+#             */
-/*   Updated: 2015/11/28 00:02:06 by larry            ###   ########.fr       */
+/*   Updated: 2015/11/28 01:56:23 by larry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm.h"
-//offlist
-void				add_tail_off(t_offlist *elem, t_offlist *to_add)
-{
-	to_add->prev = elem;
-	elem->next = to_add;
-}
-
-t_offlist		*add_before_off(t_offlist *elem, t_offlist *to_add)
-{
-	t_offlist	*ret;
-
-	ret = NULL;
-	if (elem->prev == NULL)
-	{
-		elem->prev = to_add;
-		to_add->next = elem;
-		ret = to_add;
-	}
-	else
-	{
-		to_add->next = elem;
-		to_add->prev = elem->prev;
-		elem->prev->next = to_add;
-		elem->prev = to_add;
-	}
-	return (ret);
-}
-
-t_offlist		*add_off(t_offlist *lst, uint32_t off, uint32_t strx)
-{
-	t_offlist	*tmp;
-	t_offlist	*tmp2;
-	t_offlist	*ret;
-
-	tmp = (t_offlist*)malloc(sizeof(t_offlist));
-	tmp->off = off;
-	tmp->strx = strx;
-	tmp->next = NULL;
-	tmp->prev = NULL;
-	if (!lst)
-		return (tmp);
-	tmp2 = lst;
-	while (tmp2)
-	{
-		if (tmp2->off > tmp->off)
-		{
-			ret = add_before_off(tmp2, tmp);
-			if (ret)
-				lst = ret;
-			break ;
-		}
-		else if (tmp2->next == NULL)
-		{
-			add_tail_off(tmp2, tmp);
-			break ;
-		}
-		tmp2 = tmp2->next;
-	}
-	return (lst);
-}
-
-void			print_ar(uint32_t off, char *ptr, char *file)
-{
-	int				size;
-	struct ar_hdr	*arch;
-	char			*name;
-
-	arch = (void*)ptr + off;
-	name = catch_name(arch->ar_name);
-	size = catch_size(arch->ar_name);
-	ft_putchar('\n');
-	ft_putstr(file);
-	ft_putchar('(');
-	ft_putstr(name);
-	ft_putchar(')');
-	ft_putstr(":\n");
-	ft_nm((void*)arch + sizeof(*arch) + size, file);
-}
-
-void			browse_ar(t_offlist *lst, char *ptr, char *name)
-{
-	t_offlist	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		print_ar(tmp->off, ptr, name);
-		tmp = tmp->next;
-	}
-}
-//end offlist
-
-//swap
-uint32_t	swap_uint32(uint32_t val)
-{
-	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
-	return (val << 16) | (val >> 16);
-}
-
-int			catch_size(char *name)
-{
-	int		x;
-	char	*word;
-
-	word = ft_strchr(name, '/') + 1;
-	x = ft_atoi(word);
-	return (x);
-}
-
-char		*catch_name(char *name)
-{
-	int		length;
-
-	length = ft_strlen(ARFMAG);
-	return (ft_strstr(name, ARFMAG) + length);
-}
-//End sawp
+#include "nm_tool.h"
 
 //go
 void	go_fat(char *ptr)
@@ -174,7 +57,7 @@ void	go_archive(char *ptr, char *name)
 		lst = add_off(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);
 		i++;
 	}
-	browse_ar(lst, ptr, name);
+	browse_ar_nm(lst, ptr, name);
 }
 //end go
 
