@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   endNm.c                                            :+:      :+:    :+:   */
+/*   end_nm.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "nm_tool.h"
 
-static void				displayNm(int value, char type, char *str)
+static void				display_nm(int value, char type, char *str)
 {
 	if (value == -1)
 		ft_putstr("                ");
@@ -24,27 +24,27 @@ static void				displayNm(int value, char type, char *str)
 	ft_putendl(str);
 }
 
-static void				affElem(t_memList *elem)
+static void				aff_elem(t_memlist *elem)
 {
-	t_memList	*tmp;
+	t_memlist	*tmp;
 
 	tmp = elem;
 	while (tmp)
 	{
 		if (tmp->value)
-			displayNm(tmp->value, tmp->type, tmp->str);
+			display_nm(tmp->value, tmp->type, tmp->str);
 		else if (ft_strcmp(&tmp->type, "U") == 0)
-			displayNm(-1, tmp->type, tmp->str);
+			display_nm(-1, tmp->type, tmp->str);
 		else
-			displayNm(0, tmp->type, tmp->str);
+			display_nm(0, tmp->type, tmp->str);
 		tmp = tmp->next;
 	}
 }
 
-static t_memList		*delElem(t_memList *elem)
+static t_memlist		*del_elem(t_memlist *elem)
 {
-	t_memList			*tmp;
-	t_memList			*tmp2;
+	t_memlist			*tmp;
+	t_memlist			*tmp2;
 
 	tmp = elem;
 	while (tmp)
@@ -66,13 +66,13 @@ static t_memList		*delElem(t_memList *elem)
 	return (elem);
 }
 
-void					endNm(\
+void					end_nm(\
 						struct symtab_command *sym, char *ptr, t_lsection *sec)
 {
 	int					i;
 	char				*strtable;
 	struct nlist_64		*list;
-	t_memList			*elem;
+	t_memlist			*elem;
 
 	i = 0;
 	list = (void *)ptr + sym->symoff;
@@ -83,9 +83,9 @@ void					endNm(\
 		if (ft_strncmp(strtable + list[i].n_un.n_strx, "/", 1) != 0
 				&& strtable + list[i].n_un.n_strx && ft_strlen(strtable +\
 					list[i].n_un.n_strx) && list[i].n_type != 100)
-			elem = addElem(elem, list[i], strtable, sec);
+			elem = add_elem(elem, list[i], strtable, sec);
 		i++;
 	}
-	elem = delElem(elem);
-	affElem(elem);
+	elem = del_elem(elem);
+	aff_elem(elem);
 }

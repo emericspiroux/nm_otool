@@ -17,12 +17,12 @@ void	*ft_memchr(const void *s, int c, size_t n)
 {
 	unsigned char	*cp;
 
-	cp = (unsigned char *) s;
+	cp = (unsigned char *)s;
 	if (n)
 	{
 		while (n)
 		{
-			if (*cp++ == (unsigned char) c)
+			if (*cp++ == (unsigned char)c)
 				return (cp - 1);
 			n--;
 		}

@@ -13,14 +13,21 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	ft_quicksort(char **items, int left, int right)
+static void	init_var(int left, int right, int *i, int *j)
+{
+	*i = left;
+	*j = right;
+}
+
+void		ft_quicksort(char **items, int left, int right)
 {
 	int		i;
 	int		j;
 	char	*x;
 	char	*temp;
 
-	x = items[((i = left) + (j = right)) / 2];
+	init_var(left, right, &i, &j);
+	x = items[((left) + (right)) / 2];
 	while (i <= j)
 	{
 		while (ft_strcmp(items[i], x) < 0 && i < right)

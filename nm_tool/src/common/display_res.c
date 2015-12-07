@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   displayRes.c                                       :+:      :+:    :+:   */
+/*   display_res.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -48,7 +48,7 @@ static char				*ft_itoa_base(int val, int base, int output_size)
 	return (ft_strdup(p));
 }
 
-void					displayRes(\
+void					display_res(\
 						long unsigned int addr, unsigned int size, char *ptr)
 {
 	unsigned int		i;

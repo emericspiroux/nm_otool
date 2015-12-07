@@ -27,7 +27,7 @@ static void			print_ar_tool(uint32_t off, char *ptr, char *file)
 	ft_putstr(name);
 	ft_putchar(')');
 	ft_putstr(":\n");
-	doOtool((void*)arch + sizeof(*arch) + size, file);
+	do_otool((void*)arch + sizeof(*arch) + size, file);
 }
 
 void				browse_ar_tool(t_offlist *lst, char *ptr, char *name)

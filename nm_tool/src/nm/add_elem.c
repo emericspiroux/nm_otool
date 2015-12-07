@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   addElem.c                                          :+:      :+:    :+:   */
+/*   add_elem.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,9 +12,9 @@
 
 #include "nm_tool.h"
 
-static t_memList			*add_before(t_memList *lst, t_memList *to_add)
+static t_memlist			*add_before(t_memlist *lst, t_memlist *to_add)
 {
-	t_memList				*ret;
+	t_memlist				*ret;
 
 	ret = NULL;
 	if (lst->prev == NULL)
@@ -33,17 +33,18 @@ static t_memList			*add_before(t_memList *lst, t_memList *to_add)
 	return (ret);
 }
 
-static void					add_tail(t_memList *yolo, t_memList *to_add)
+static void					add_tail(t_memlist *yolo, t_memlist *to_add)
 {
 	to_add->prev = yolo;
 	yolo->next = to_add;
 }
 
-static t_memList			*newElem(struct nlist_64 list, char *strtable, t_lsection *sec)
+static t_memlist			*new_elem(\
+	struct nlist_64 list, char *strtable, t_lsection *sec)
 {
-	t_memList				*tmp;
+	t_memlist				*tmp;
 
-	tmp = (t_memList*)malloc(sizeof(t_memList));
+	tmp = (t_memlist*)malloc(sizeof(t_memlist));
 	tmp->value = list.n_value;
 	tmp->type = typing(list.n_type, list.n_sect, sec, list.n_value);
 	tmp->str = ft_strdup(strtable + list.n_un.n_strx);
@@ -52,13 +53,14 @@ static t_memList			*newElem(struct nlist_64 list, char *strtable, t_lsection *se
 	return (tmp);
 }
 
-t_memList					*addElem(t_memList *elem, struct nlist_64 list, char *strtable, t_lsection *sec)
+t_memlist					*add_elem(\
+	t_memlist *elem, struct nlist_64 list, char *strtable, t_lsection *sec)
 {
-	t_memList				*bws_word;
-	t_memList				*tmp;
-	t_memList				*ret;
+	t_memlist				*bws_word;
+	t_memlist				*tmp;
+	t_memlist				*ret;
 
-	tmp = newElem(list, strtable, sec);
+	tmp = new_elem(list, strtable, sec);
 	if (elem == NULL)
 		return (tmp);
 	bws_word = elem;

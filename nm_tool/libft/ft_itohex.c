@@ -12,13 +12,14 @@
 
 #include "libft.h"
 #include <stdlib.h>
-static char *	init_string(int len)
+
+static char		*init_string(int len)
 {
 	int			i;
 	char		*str;
 
 	i = 0;
-	str = (char *) malloc((sizeof(char) * len) + 1);
+	str = (char *)malloc((sizeof(char) * len) + 1);
 	while (i < len)
 	{
 		str[i] = '0';
@@ -28,18 +29,42 @@ static char *	init_string(int len)
 	return (str);
 }
 
-char*			ft_itohex(int n, int nb_z)
+static char		*init_hex(void)
+{
+	char		*tab;
+
+	tab = (char *)malloc(sizeof(char) * 16);
+	tab[0] = '0';
+	tab[1] = '1';
+	tab[2] = '2';
+	tab[3] = '3';
+	tab[4] = '4';
+	tab[5] = '5';
+	tab[6] = '6';
+	tab[7] = '7';
+	tab[8] = '8';
+	tab[9] = '9';
+	tab[10] = 'a';
+	tab[11] = 'b';
+	tab[12] = 'c';
+	tab[13] = 'd';
+	tab[14] = 'e';
+	tab[15] = 'f';
+	return (tab);
+}
+
+char			*ft_itohex(int n, int nb_z)
 {
 	char		*convert;
 	int			res;
 	int			i;
-	char		tab[] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
+	char		*tab;
 
+	tab = init_hex();
 	i = 0;
 	convert = init_string(nb_z);
 	if (n < 0 || nb_z <= 0)
 		return (convert);
-
 	while (n > 0)
 	{
 		res = n % 16;
@@ -47,5 +72,6 @@ char*			ft_itohex(int n, int nb_z)
 		n /= 16;
 		i++;
 	}
+	free(tab);
 	return (convert);
 }

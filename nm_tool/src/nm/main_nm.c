@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main_nm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: espiroux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/26 16:14:36 by larry             #+#    #+#             */
-/*   Updated: 2015/11/30 04:06:53 by larry            ###   ########.fr       */
+/*   Created: 2015/12/07 18:28:43 by espiroux          #+#    #+#             */
+/*   Updated: 2015/12/07 18:29:58 by espiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm_tool.h"
 
-static int			errors()
+static int			errors(void)
 {
 	ft_putstr("Error\n");
 	return (-1);
 }
 
-static int			openMemory(int ac, int i, char **av)
+static int			open_memory(int ac, int i, char **av)
 {
 	t_stat			stat;
 	char			*ptr;
@@ -38,7 +38,7 @@ static int			openMemory(int ac, int i, char **av)
 			!(ptr = mmap(0, stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0)))
 		fd = errors();
 	if (fd != -1)
-		doNm(ptr, av[i]);
+		do_nm(ptr, av[i]);
 	if (fd != -1 && munmap(ptr, stat.st_size) < 0)
 	{
 		fd = errors();
@@ -59,10 +59,9 @@ int					main(int ac, char *av[])
 	i = 1;
 	while (i < ac)
 	{
-		if (!openMemory(ac, i, av))
+		if (!open_memory(ac, i, av))
 			break ;
 		i++;
 	}
 	return (0);
 }
-

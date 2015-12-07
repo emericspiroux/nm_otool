@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-clude "libft.h"
+#include "libft.h"
 
 void	ft_lstpushback(t_list **begin, t_list *new)
 {

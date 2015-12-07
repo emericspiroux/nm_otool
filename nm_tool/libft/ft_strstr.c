@@ -24,7 +24,7 @@ char	*ft_strstr(const char *str, const char *find)
 	while (*cp)
 	{
 		s1 = cp;
-		s2 = (char *) find;
+		s2 = (char *)find;
 		while (*s1 && *s2 && !(*s1 - *s2))
 		{
 			s1++;

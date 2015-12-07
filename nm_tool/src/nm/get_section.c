@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getSection.c                                       :+:      :+:    :+:   */
+/*   get_section.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "nm_tool.h"
 
-static void				addList(char *name, t_lsection *list)
+static void						add_list(char *name, t_lsection *list)
 {
 	t_section	*add;
 
@@ -34,7 +34,7 @@ static void				addList(char *name, t_lsection *list)
 	}
 }
 
-static void						addSegment(\
+static void						add_segment(\
 									struct load_command *com, t_lsection *list)
 {
 	unsigned int				i;
@@ -46,13 +46,13 @@ static void						addSegment(\
 	sec = (struct section_64*)(seg + sizeof(seg) / sizeof(void*));
 	while (i < seg->nsects)
 	{
-		addList(sec->sectname, list);
+		add_list(sec->sectname, list);
 		sec = (struct section_64 *)(((void*)sec) + sizeof(struct section_64));
 		i++;
 	}
 }
 
-t_lsection						*getSection(\
+t_lsection						*get_section(\
 							struct load_command *c, struct mach_header_64 *m)
 {
 	t_lsection					*list;
@@ -66,7 +66,7 @@ t_lsection						*getSection(\
 	while (i < m->ncmds)
 	{
 		if (c->cmd == LC_SEGMENT_64)
-			addSegment(c, list);
+			add_segment(c, list);
 		c += c->cmdsize / sizeof(void *);
 		i++;
 	}

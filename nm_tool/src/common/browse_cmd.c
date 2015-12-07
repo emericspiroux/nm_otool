@@ -26,7 +26,7 @@ static void						check_text(\
 		if (!ft_strcmp(sec->sectname, TUT) && !ft_strcmp(sec->segname, TXT))
 		{
 			write(1, "(__TEXT,__text) section\n", 24);
-			displayRes(sec->addr, sec->size, (char *)mo + sec->offset);
+			display_res(sec->addr, sec->size, (char *)mo + sec->offset);
 		}
 		sec = (struct section_64*)(((void*)sec) + sizeof(struct section_64));
 		i++;

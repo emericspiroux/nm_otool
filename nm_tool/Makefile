@@ -29,24 +29,24 @@ FT_C_COM = 	$(SRC_COM)list_off.c \
 			$(SRC_COM)catch_name.c \
 			$(SRC_COM)swap_uint32.c \
 			$(SRC_COM)browse_cmd.c \
-			$(SRC_COM)displayRes.c
+			$(SRC_COM)display_res.c
 
 FT_C_NM =	$(SRC_NM)main_nm.c \
 			$(SRC_NM)browse_ar_nm.c \
-			$(SRC_NM)doArchive.c \
-			$(SRC_NM)doFat.c \
-			$(SRC_NM)addElem.c \
-			$(SRC_NM)getSection.c \
-			$(SRC_NM)endNm.c \
+			$(SRC_NM)do_archive.c \
+			$(SRC_NM)do_fat.c \
+			$(SRC_NM)add_elem.c \
+			$(SRC_NM)get_section.c \
+			$(SRC_NM)end_nm.c \
 			$(SRC_NM)typing.c \
-			$(SRC_NM)doNm.c \
+			$(SRC_NM)do_nm.c \
 			$(FT_C_COM)
 
 FT_C_OT =	$(SRC_OT)main_ot.c \
-			$(SRC_OT)doOtool.c \
+			$(SRC_OT)do_otool.c \
 			$(SRC_OT)browse_ar_tool.c \
-			$(SRC_OT)doArchiveTool.c \
-			$(SRC_OT)doFatTool.c \
+			$(SRC_OT)do_archive_tool.c \
+			$(SRC_OT)do_fat_tool.c \
 			$(FT_C_COM)
 
 

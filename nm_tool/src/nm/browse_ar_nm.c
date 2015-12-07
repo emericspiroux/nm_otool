@@ -27,12 +27,12 @@ static void			print_ar_nm(uint32_t off, char *ptr, char *file)
 	ft_putstr(name);
 	ft_putchar(')');
 	ft_putstr(":\n");
-	doNm((void*)arch + sizeof(*arch) + size, file);
+	do_nm((void*)arch + sizeof(*arch) + size, file);
 }
 
-void			browse_ar_nm(t_offlist *lst, char *ptr, char *name)
+void				browse_ar_nm(t_offlist *lst, char *ptr, char *name)
 {
-	t_offlist	*tmp;
+	t_offlist		*tmp;
 
 	tmp = lst;
 	while (tmp)

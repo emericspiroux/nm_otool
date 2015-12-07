@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doFatTool.c                                        :+:      :+:    :+:   */
+/*   do_fat_tool.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
+/*   By: espiroux <espiroux@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/30 02:27:49 by larry             #+#    #+#             */
-/*   Updated: 2015/11/30 02:55:01 by larry            ###   ########.fr       */
+/*   Created: 2015/11/30 02:54:00 by espiroux          #+#    #+#             */
+/*   Updated: 2015/12/07 18:00:15 by espiroux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nm_tool.h"
 
-void					doFatTool(char *ptr)
+void					do_fat_tool(char *ptr)
 {
 	struct fat_header	*fat;
 	struct fat_arch		*arch;
@@ -30,5 +30,5 @@ void					doFatTool(char *ptr)
 		arch += sizeof(arch) / sizeof(void*);
 		x--;
 	}
-	doOtool(ptr + swap_uint32(offset), NULL);
+	do_otool(ptr + swap_uint32(offset), NULL);
 }

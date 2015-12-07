@@ -39,17 +39,25 @@ static t_offlist		*add_before_off(t_offlist *elem, t_offlist *to_add)
 	return (ret);
 }
 
-t_offlist				*add_off(t_offlist *lst, uint32_t off, uint32_t strx)
+static t_offlist		*new_elem_offlist(uint32_t off, uint32_t strx)
 {
 	t_offlist			*tmp;
-	t_offlist			*tmp2;
-	t_offlist			*ret;
 
 	tmp = (t_offlist*)malloc(sizeof(t_offlist));
 	tmp->off = off;
 	tmp->strx = strx;
 	tmp->next = NULL;
 	tmp->prev = NULL;
+	return (tmp);
+}
+
+t_offlist				*add_off(t_offlist *lst, uint32_t off, uint32_t strx)
+{
+	t_offlist			*tmp;
+	t_offlist			*tmp2;
+	t_offlist			*ret;
+
+	tmp = new_elem_offlist(off, strx);
 	if (!lst)
 		return (tmp);
 	tmp2 = lst;

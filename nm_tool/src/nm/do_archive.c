@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doArchive.c                                        :+:      :+:    :+:   */
+/*   do_archive.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,28 +12,26 @@
 
 #include "nm_tool.h"
 
-void				doArchive(char *ptr, char *name)
+void				do_archive(char *ptr, char *name)
 {
 	struct ar_hdr	*arch;
 	struct ranlib	*ran;
 	t_offlist		*lst;
 	char			*test;
-	int				i;
-	int				size;
-	int				size2;
+	t_doarchive		var;
 
-	i = 0;
+	var.i = 0;
 	arch = (void*)ptr + SARMAG;
-	size2 = catch_size(arch->ar_name);
-	test = (void*)ptr + sizeof(*arch) + SARMAG + size2;
-	ran = (void*)ptr + sizeof(*arch) + SARMAG + size2 + 4;
-	size = *((int *)test);
+	var.size2 = catch_size(arch->ar_name);
+	test = (void*)ptr + sizeof(*arch) + SARMAG + var.size2;
+	ran = (void*)ptr + sizeof(*arch) + SARMAG + var.size2 + 4;
+	var.size = *((int *)test);
 	lst = NULL;
-	size = size / sizeof(struct ranlib);
-	while (i < size)
+	var.size = var.size / sizeof(struct ranlib);
+	while (var.i < var.size)
 	{
-		lst = add_off(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);
-		i++;
+		lst = add_off(lst, ran[var.i].ran_off, ran[var.i].ran_un.ran_strx);
+		var.i++;
 	}
 	browse_ar_nm(lst, ptr, name);
 }

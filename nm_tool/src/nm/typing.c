@@ -35,7 +35,8 @@ static char			secto(t_lsection *sec, unsigned int n_sect)
 	return ('S');
 }
 
-char				typing(uint32_t type, uint32_t n_sect, t_lsection *sec, int addr)
+char				typing(\
+	uint32_t type, uint32_t n_sect, t_lsection *sec, int addr)
 {
 	char			ret;
 

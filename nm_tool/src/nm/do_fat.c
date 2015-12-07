@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doFat.c                                            :+:      :+:    :+:   */
+/*   do_fat.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: larry <larry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "nm_tool.h"
 
-void					doFat(char *ptr)
+void					do_fat(char *ptr)
 {
 	struct fat_header	*fat;
 	struct fat_arch		*arch;
@@ -30,5 +30,5 @@ void					doFat(char *ptr)
 		arch += sizeof(arch) / sizeof(void*);
 		x--;
 	}
-	doNm(ptr + swap_uint32(offset), NULL);
+	do_nm(ptr + swap_uint32(offset), NULL);
 }
